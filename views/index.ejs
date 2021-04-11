@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+        <title>Hello, world!</title>
+    </head>
+
+    <style>
+        .logo img{
+            width: 180px;
+            display: block;
+            margin: auto;
+        }
+        #heading{
+            font-size: 1.5rem;
+            color: gray;
+        }
+        .instructions{
+            /* background-color: yellow; */
+            /* width: fit-content;
+            margin: auto; */
+        }
+        .control-buttons{
+            display: flex;
+            
+        }
+        #btn-start, #btn-stop{
+            width: 100%;
+            margin: 10px 10px;
+        }
+        .recording-section{
+            /* width: 100%; */
+        }
+        audio{
+            width: 100%;
+            margin: 10px auto;
+        }
+        #recordings{
+            margin: auto;
+            padding: 10px;
+            width: 80%;
+            height: 420px;
+            border: 2px solid #97D083;
+            border-radius: 1rem;
+            overflow-y: scroll;
+        }
+        /* #recordings::-webkit-scrollbar{
+            
+        } */
+    </style>
+    <body>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="logo">
+                        <img src="/assets/logo.jpeg" alt="">
+                    </div>
+                    <h1 id="heading" class="text-center">JUST ABOUT MUSIC</h1>
+        
+                    <div class="instructions mt-5">
+                        <h2>Instructions:</h2>
+                        <ol>
+                            <li>First Record the vocals</li>
+                            <li>After confirming the correct vocal, download it</li>
+                            <li>Then move to the JAM instrument section</li>
+                        </ol>
+                    </div>
+
+                    <h2 class="text-center mt-4 mb-3">Instrument Section</h2>
+                    <button class="btn btn-lg btn-warning m-auto d-block" style="width: 50%;"><a href="" style="text-decoration: none;color: white;">GO!</a></button>
+                </div>
+                <div class="col-6">
+                    <div class="recording-section mt-5 ">
+                        <div class="control-buttons">
+                            <button id="btn-start" class="btn btn-primary btn-lg">Start</button>
+                            <button id="btn-stop" class="btn btn-danger btn-lg ">Stop</button>
+                        </div>
+                        
+                        <audio id="vid1" class="d-none" src="" controls muted></audio>
+                    
+                        <h1 class="my-4 text-center">Recordings</h1>
+                        <div id="recordings">
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    
+    
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    
+    <script>
+
+        let constraintObj = {
+            audio: true,
+            video: false
+        }
+        navigator.mediaDevices.getUserMedia(constraintObj)
+        .then((mediaStream) => {
+            let audio = document.getElementById("vid1");
+            if("srcObject" in audio){
+                audio.srcObject = mediaStream;
+            }else{
+                audio.src = window.URL.createObjectURL(mediaStream);
+            }
+    
+            audio.onloadedmetadata = function(ev){
+                audio.play();
+            }
+    
+            let start = document.getElementById("btn-start");
+            let stop = document.getElementById("btn-stop");
+            
+            let mediaRecorder = new MediaRecorder(mediaStream);
+            let chunks = [];
+    
+            start.addEventListener('click', (ev) => {
+                mediaRecorder.start();
+                console.log(mediaRecorder.state);
+            });
+    
+            stop.addEventListener("click", (ev) => {
+                mediaRecorder.stop();
+                console.log(mediaRecorder.state);
+            });
+            mediaRecorder.ondataavailable = function(ev) {
+                chunks.push(ev.data);
+            }
+            mediaRecorder.onstop = (ev) => {
+                let blob = new Blob(chunks, {'type' : 'audio/mp3;'});
+                chunks = [];
+                let audioURL = window.URL.createObjectURL(blob);
+                let audioSave  = document.createElement("audio");
+                audioSave.controls = true;
+                audioSave.src = audioURL;
+                audioSave.title = "singer";
+                document.getElementById("recordings").append(audioSave);
+            }
+    
+    
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    
+    
+    </script>   
+    </body>
+</html>
