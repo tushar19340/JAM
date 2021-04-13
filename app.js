@@ -18,7 +18,6 @@ app.get("/", (req, res) => {
 
 app.post("/run-script", (req, res) => {
     
-
     res.send(dataToSend);
 })
 
@@ -27,7 +26,7 @@ app.get("/collab", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-    console.log("A user is connected: ", socket);
+    console.log("A user is connected: ");
     socket.on("download", () => {
         setTimeout(runScript, 5000);
 

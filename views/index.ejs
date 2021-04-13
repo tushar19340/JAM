@@ -158,11 +158,15 @@
     
             start.addEventListener('click', (ev) => {
                 mediaRecorder.start();
+                start.disabled = true;
+                stop.disabled = false;
                 console.log(mediaRecorder.state);
             });
-    
+            stop.disabled = true;
             stop.addEventListener("click", (ev) => {
                 mediaRecorder.stop();
+                start.disabled = false;
+                stop.disabled = true;
                 console.log(mediaRecorder.state);
             });
             mediaRecorder.ondataavailable = function(ev) {
@@ -181,6 +185,7 @@
                 audioSave.controls = true;
                 audioSave.src = audioURL;
                 audioSave.title = "singer";
+                audioSave.controlsList = "nodownload";
                 audioDiv.append(audioSave);
 
                 let downloadLink = document.createElement("a");
@@ -193,6 +198,7 @@
                 
                 downloadLink.addEventListener("click", (ev) => {
                     socket.emit("download");
+                    
                 })
 
                 audioDiv.append(downloadLink);
@@ -207,6 +213,11 @@
         .catch((err) => {
             console.log(err)
         })
+        
+
+        
+
+        
     
     
     </script>   

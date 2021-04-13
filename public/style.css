@@ -1,5 +1,14 @@
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+::-webkit-scrollbar {
+  width: 5px; }
 
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffc300;
+}
 :root {
   --cg: 1;
   --pl: absolute;
