@@ -19,6 +19,9 @@
         /* font-weight: bold; */
         }
 
+        html, body{
+            height: 100%;
+        }
         body{
             /* background: #c31432;  
             background: -webkit-linear-gradient(to right, #240b36, #c31432); 
@@ -81,13 +84,15 @@
         audio{
             width: 80%;
             margin: 10px 10px 10px 0;
+            outline: none;  
+            box-shadow: none;
         }
         #recordings{
             margin: auto;
             padding: 10px;
             width: 100%;
             max-width: 420px;
-            height: 400px;
+            height: 300px;
             border: 2px solid #97D083;
             border-radius: 6px;
             overflow-y: scroll;
@@ -118,9 +123,9 @@
     </style>
     <body>
         
-        <div class="mb-5" style="width: 90%;margin: auto;">
+        <div style="width: 90%;margin: auto;">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-6 mt-3">
                     <div class="logo mt-5 mb-3">
                         <img src="/assets/logo.png" alt="">
                     </div>
@@ -129,19 +134,19 @@
                     <div class="instructions mt-4">
                         <h2>Instructions:</h2>
                         <ol>
-                            <li>First Record the vocals</li>
-                            <li>After confirming the correct vocal, download it</li>
-                            <li>Then move to the JAM instrument section</li>
+                            <li>Record a base audio (preferably vocals) as many time as you like here.</li>
+                            <li>After finalizing one base audio, download it. </li>
+                            <li>Move on to the JAM instrument section</li>
+                            <li>Collaborate with friends and use your keyboard keys to produce different sounds of 8 different instruments. </li>
                         </ol>
                     </div>
 
-                    <h2 class="text-center mt-4 mb-3">Instrument Section</h2>
-                    <a href="/collab" style="text-decoration: none;"><button id="btn-go" class="btn btn-lg btn-warning m-auto d-block" style="width: 50%;">GO!</button></a>
+                    <!-- <h2 class="text-center mt-4 mb-3">Instrument Section</h2> -->
                 </div>
                 <div class="col-sm-6">
                     <div class="recording-section mt-5 ">
                         <!-- <audio src="/A/1.mp3" controls></audio>
-                        <a href="/A/1.mp3" download="Songs">download</a> -->
+                            <a href="/A/1.mp3" download="Songs">download</a> -->
                         <div class="control-buttons">
                             <button id="btn-start" class="btn btn-primary btn-lg">Start</button>
                             <button id="btn-pause" class="btn btn-warning btn-lg mx-2">Pause</button>
@@ -150,10 +155,14 @@
                         <p id="recording-status" class="text-center my-4">Start to record</p>
                         
                         <audio id="vid1" class="d-none" src="" controls muted></audio>
-                    
+                        
                         <h1 class="my-4 text-center">Recordings</h1>
                         <div id="recordings">
                         </div>
+                        <a href="/collab" style="text-decoration: none;">
+                            <button id="btn-go" class="btn btn-lg btn-warning mt-4 m-auto d-block" style="width: 100%;max-width: 420px;">
+                            Go To Jam Session!
+                        </button></a>
             
                     </div>
                 </div>
