@@ -12,33 +12,68 @@
     </head>
 
     <style>
+
+        @font-face {
+        font-family: Avenir;
+        src: url(/assets/avenir/AvenirLTStd-Book.otf);
+        /* font-weight: bold; */
+        }
+
         body{
-            background: #c31432;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            
-            color: white;    
+            /* background: #c31432;  
+            background: -webkit-linear-gradient(to right, #240b36, #c31432); 
+            background: linear-gradient(to right, #240b36, #c31432); */
+            background: linear-gradient(#f2f2f2, #e6e6e6, #808080);
+            font-family: Avenir;
+            color: #222222;    
         }
         .logo img{
-            width: 200px;
+            width: 250px;
             display: block;
             margin: auto;
         }
         #heading{
-            font-size: 1.5rem;
-            color: gray;
+            font-size: 35px;
+            color: #333333;
         }
         .instructions{
             /* background-color: yellow; */
             /* width: fit-content;
             margin: auto; */
+            font-size: 20px;
         }
         .control-buttons{
             display: flex;
         }
-        #btn-start, #btn-stop, #btn-state{
+        
+        .btn:focus,.btn:active:focus,.btn.active:focus,
+        .btn.focus,.btn:active.focus,.btn.active.focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        #btn-start, #btn-stop, #btn-pause, #btn-go{
             width: 100%;
             /* margin: 10px 10px; */
+            border: none;
+            color: white;
+            font-weight: bold;
+        }
+        #btn-start {
+            background-color: #338333;
+        }
+        #btn-pause {
+            background-color: #006400;
+        }
+        #btn-stop {
+            background-color: #197419;
+        }
+        #btn-go {
+            background-color: #4d943d;
+        }
+        #recording-status{
+            color: #222222;
+            font-size: 16px;
         }
         .recording-section{
             /* width: 100%; */
@@ -86,12 +121,12 @@
         <div class="mb-5" style="width: 90%;margin: auto;">
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="logo my-3">
+                    <div class="logo mt-5 mb-3">
                         <img src="/assets/logo.png" alt="">
                     </div>
-                    <h1 id="heading" class="text-center">JUST ABOUT MUSIC</h1>
+                    <h1 id="heading" class="text-center"><i>JUST ABOUT MUSIC</i></h1>
         
-                    <div class="instructions mt-5">
+                    <div class="instructions mt-4">
                         <h2>Instructions:</h2>
                         <ol>
                             <li>First Record the vocals</li>
@@ -101,7 +136,7 @@
                     </div>
 
                     <h2 class="text-center mt-4 mb-3">Instrument Section</h2>
-                    <a href="/collab" style="text-decoration: none;"><button class="btn btn-lg btn-warning m-auto d-block" style="width: 50%;">GO!</button></a>
+                    <a href="/collab" style="text-decoration: none;"><button id="btn-go" class="btn btn-lg btn-warning m-auto d-block" style="width: 50%;">GO!</button></a>
                 </div>
                 <div class="col-sm-6">
                     <div class="recording-section mt-5 ">
@@ -109,7 +144,7 @@
                         <a href="/A/1.mp3" download="Songs">download</a> -->
                         <div class="control-buttons">
                             <button id="btn-start" class="btn btn-primary btn-lg">Start</button>
-                            <button id="btn-state" class="btn btn-warning btn-lg mx-2">State</button>
+                            <button id="btn-pause" class="btn btn-warning btn-lg mx-2">Pause</button>
                             <button id="btn-stop" class="btn btn-danger btn-lg ">Stop</button>
                         </div>
                         <p id="recording-status" class="text-center my-4">Start to record</p>
@@ -153,7 +188,7 @@
     
             let start = document.getElementById("btn-start");
             let stop = document.getElementById("btn-stop");
-            let state = document.getElementById("btn-state");
+            let pause = document.getElementById("btn-pause");
 
             let mediaRecorder = new MediaRecorder(mediaStream);
             let chunks = [];
@@ -162,20 +197,22 @@
                 mediaRecorder.start();
                 start.disabled = true;
                 stop.disabled = false;
-                state.disabled = false;
+                pause.disabled = false;
 
                 document.getElementById("recording-status").innerHTML = "Recording...";
 
                 console.log(mediaRecorder.state);
             });
 
-            state.disabled = true;
-            state.addEventListener("click", (ev) => {
+            pause.disabled = true;
+            pause.addEventListener("click", (ev) => {
                 if(mediaRecorder.state == "recording"){
                     mediaRecorder.pause();
+                    pause.innerHTML = "Resume";
                     document.getElementById("recording-status").innerHTML = "Recording paused";
                 }else if(mediaRecorder.state == "paused"){
                     mediaRecorder.resume();
+                    pause.innerHTML = "Pause";
                     document.getElementById("recording-status").innerHTML = "Recording...";
                 }
                 console.log(mediaRecorder.state);
@@ -186,9 +223,9 @@
                 mediaRecorder.stop();
                 start.disabled = false;
                 stop.disabled = true;
-                state.disabled = true;
+                pause.disabled = true;
                 
-                document.getElementById("recording-status").innerHTML = "Recording stopped <br> Start to record";
+                document.getElementById("recording-status").innerHTML = "Recording Completed <br> Start to record";
 
 
                 console.log(mediaRecorder.state);
