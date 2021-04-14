@@ -57,11 +57,16 @@
   --lpk:translateY(6.9px);
 
 }
+@font-face {
+        font-family: Avenir;
+        src: url(/assets/avenir/AvenirLTStd-Book.otf);
+        /* font-weight: bold; */
+        }
 html {
   background: black;
 
   color: lightgreen;
-  font-family: var(--fon);
+  font-family: Avenir;
   font-size: var(--op);
   -webkit-font-smoothing: antialiased;
 }
@@ -234,7 +239,7 @@ button:focus .key{
   top:20%;
   z-index: var(--pqc);
   font-size: 3em;
-  font-family: var(--fon);
+  font-family: Avenir;
   width: var(--opx);
 }
 .snav ul {
@@ -310,7 +315,7 @@ button:focus .key{
   top:20%;
   z-index: var(--pqc);
   font-size: 3em;
-  font-family: 'Open Sans', sans-serif;
+  font-family: Avenir;
 }
 .rnav ul {
   list-style: var(--lpw);
