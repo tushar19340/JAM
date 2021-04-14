@@ -419,7 +419,7 @@ var SOUNDS = {
     'h':"/6 dha.mp3",
     'j':"/7 ni.mp3"  ,
     'k':"/8 saa.mp3",
-    'l':"/mute.mp3",
+    'l':"/singer.mp3",
     'z':"/singer.mp3",
     'x':"/mute.mp3",
     'c':"/mute.mp3" ,
