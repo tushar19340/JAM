@@ -35,11 +35,10 @@
         }
         .control-buttons{
             display: flex;
-            
         }
-        #btn-start, #btn-stop{
+        #btn-start, #btn-stop, #btn-state{
             width: 100%;
-            margin: 10px 10px;
+            /* margin: 10px 10px; */
         }
         .recording-section{
             /* width: 100%; */
@@ -110,8 +109,10 @@
                         <a href="/A/1.mp3" download="Songs">download</a> -->
                         <div class="control-buttons">
                             <button id="btn-start" class="btn btn-primary btn-lg">Start</button>
+                            <button id="btn-state" class="btn btn-warning btn-lg mx-2">State</button>
                             <button id="btn-stop" class="btn btn-danger btn-lg ">Stop</button>
                         </div>
+                        <p id="recording-status" class="text-center my-4">Start to record</p>
                         
                         <audio id="vid1" class="d-none" src="" controls muted></audio>
                     
@@ -152,7 +153,8 @@
     
             let start = document.getElementById("btn-start");
             let stop = document.getElementById("btn-stop");
-            
+            let state = document.getElementById("btn-state");
+
             let mediaRecorder = new MediaRecorder(mediaStream);
             let chunks = [];
     
@@ -160,20 +162,42 @@
                 mediaRecorder.start();
                 start.disabled = true;
                 stop.disabled = false;
+                state.disabled = false;
+
+                document.getElementById("recording-status").innerHTML = "Recording...";
+
                 console.log(mediaRecorder.state);
             });
+
+            state.disabled = true;
+            state.addEventListener("click", (ev) => {
+                if(mediaRecorder.state == "recording"){
+                    mediaRecorder.pause();
+                    document.getElementById("recording-status").innerHTML = "Recording paused";
+                }else if(mediaRecorder.state == "paused"){
+                    mediaRecorder.resume();
+                    document.getElementById("recording-status").innerHTML = "Recording...";
+                }
+                console.log(mediaRecorder.state);
+            });
+
             stop.disabled = true;
             stop.addEventListener("click", (ev) => {
                 mediaRecorder.stop();
                 start.disabled = false;
                 stop.disabled = true;
+                state.disabled = true;
+                
+                document.getElementById("recording-status").innerHTML = "Recording stopped <br> Start to record";
+
+
                 console.log(mediaRecorder.state);
             });
             mediaRecorder.ondataavailable = function(ev) {
                 chunks.push(ev.data);
             }
             mediaRecorder.onstop = (ev) => {
-                console.log("recording stopped")
+                // console.log("recording stopped")
                 let blob = new Blob(chunks, {'type' : 'audio/mp3;'});
                 chunks = [];
                 let audioURL = window.URL.createObjectURL(blob);
